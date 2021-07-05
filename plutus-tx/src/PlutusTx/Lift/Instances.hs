@@ -91,6 +91,12 @@ instance uni `PLC.Includes` Char => Typeable uni Char where
 instance uni `PLC.Includes` Char => Lift uni Char where
     lift = liftBuiltin
 
+instance uni `PLC.Includes` PLC.Data => Typeable uni BuiltinData where
+    typeRep _ = typeRepBuiltin (Proxy @PLC.Data)
+
+instance uni `PLC.Includes` PLC.Data => Lift uni BuiltinData where
+    lift (BuiltinData b) = liftBuiltin b
+
 -- Standard types
 -- These need to be in a separate file for TH staging reasons
 

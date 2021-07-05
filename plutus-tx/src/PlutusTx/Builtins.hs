@@ -46,6 +46,8 @@ module PlutusTx.Builtins (
                                 , unsafeDataAsList
                                 , unsafeDataAsI
                                 , unsafeDataAsB
+                                , BI.builtinDataToData
+                                , BI.dataToBuiltinData
                                 -- * Strings
                                 , BuiltinString
                                 , appendString
