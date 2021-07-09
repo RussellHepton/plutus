@@ -57,6 +57,7 @@ module PlutusTx.Builtins (
                                 , encodeUtf8
                                 -- * Tracing
                                 , trace
+                                -- * Data
                                 ) where
 
 import           Data.ByteString            as BS

@@ -7,11 +7,10 @@ import           Data.Traversable
 import qualified Language.Haskell.TH          as TH
 import qualified Language.Haskell.TH.Datatype as TH
 
-import           PlutusCore.Data
-
 import qualified PlutusTx.Applicative         as PlutusTx
 import qualified PlutusTx.Eq                  as PlutusTx
 
+import           PlutusTx.Builtins
 import           PlutusTx.IsData.Class
 
 toDataClause :: (TH.ConstructorInfo, Int) -> TH.Q TH.Clause
@@ -32,6 +31,7 @@ fromDataClause (TH.ConstructorInfo{TH.constructorName=name, TH.constructorFields
     let argsFromData = fmap (\v -> [| fromBuiltinData $(TH.varE v) |]) argNames
     let app = foldl' (\h e -> [| $h PlutusTx.<*> $e |]) [| PlutusTx.pure $(TH.conE name) |] argsFromData
 
+    dName <- TH.newName "d"
     let body =
             [|
                 let reconstruct i $(lpat) | i PlutusTx.== index = $(app)
